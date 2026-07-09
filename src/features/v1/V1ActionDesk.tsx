@@ -8,9 +8,10 @@ import { createV1ActionCard, type V1ActionStatusKey } from "./v1-action-status";
 const filterOptions: Array<{ key: V1ActionStatusKey | "all"; label: string }> =
   [
     { key: "all", label: "全部" },
+    { key: "confirmed_task", label: "已確認任務" },
     { key: "do_not_go", label: "先不要出發" },
     { key: "confirm_first", label: "先確認來源" },
-    { key: "verify_on_site", label: "可以出發確認資訊" },
+    { key: "verify_on_site", label: "僅可前往核對" },
     { key: "lead_only", label: "只作為線索" },
   ];
 
@@ -38,6 +39,10 @@ export function V1ActionDesk({ records }: { records: Phase0MessyRecord[] }) {
       </header>
 
       <section className="v1-summary" aria-label="行動狀態摘要">
+        <div className="v1-summary__item v1-summary__item--task">
+          <span>已確認任務</span>
+          <strong>{counts.confirmed_task}</strong>
+        </div>
         <div className="v1-summary__item v1-summary__item--stop">
           <span>先不要出發</span>
           <strong>{counts.do_not_go}</strong>
@@ -47,7 +52,7 @@ export function V1ActionDesk({ records }: { records: Phase0MessyRecord[] }) {
           <strong>{counts.confirm_first}</strong>
         </div>
         <div className="v1-summary__item v1-summary__item--verify">
-          <span>可以出發確認資訊</span>
+          <span>僅可前往核對</span>
           <strong>{counts.verify_on_site}</strong>
         </div>
         <div className="v1-summary__item v1-summary__item--lead">
@@ -88,11 +93,11 @@ export function V1ActionDesk({ records }: { records: Phase0MessyRecord[] }) {
 
             <dl className="v1-card__facts">
               <div>
-                <dt>可能工種</dt>
+                <dt>系統依原文推測的可能工種</dt>
                 <dd>{card.workType.label}</dd>
               </div>
               <div>
-                <dt>推測地點</dt>
+                <dt>推測地點，需人工核對</dt>
                 <dd>{card.location}，不是可直接前往地址</dd>
               </div>
               <div>
@@ -128,6 +133,7 @@ function getFilterFromUrl(): V1ActionStatusKey | "all" {
 
   if (
     filter === "do_not_go" ||
+    filter === "confirmed_task" ||
     filter === "confirm_first" ||
     filter === "verify_on_site" ||
     filter === "lead_only"
@@ -147,6 +153,7 @@ function countByActionStatus(
       [card.actionStatus.key]: counts[card.actionStatus.key] + 1,
     }),
     {
+      confirmed_task: 0,
       do_not_go: 0,
       confirm_first: 0,
       verify_on_site: 0,

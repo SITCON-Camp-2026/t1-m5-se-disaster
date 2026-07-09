@@ -175,9 +175,10 @@ describe("App", () => {
     renderAt("/v1/");
 
     expect(screen.getByText("先判斷能不能行動")).toBeInTheDocument();
+    expect(screen.getAllByText("已確認任務").length).toBeGreaterThan(0);
     expect(screen.getAllByText("先不要出發").length).toBeGreaterThan(0);
     expect(screen.getAllByText("先確認來源").length).toBeGreaterThan(0);
-    expect(screen.getAllByText("可以出發確認資訊").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("僅可前往核對").length).toBeGreaterThan(0);
     expect(screen.getAllByText("只作為線索").length).toBeGreaterThan(0);
     expect(screen.getAllByText("目前判斷").length).toBeGreaterThan(0);
     expect(screen.getAllByText("現場幫手要做什麼").length).toBeGreaterThan(0);

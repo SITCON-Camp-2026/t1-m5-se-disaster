@@ -626,7 +626,7 @@ button {
 
 .v1-summary {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 12px;
   margin: 24px 0;
 }
@@ -653,6 +653,11 @@ button {
 .v1-summary__item--stop {
   border-color: #ef9a9a;
   background: #fff7f6;
+}
+
+.v1-summary__item--task {
+  border-color: #60b783;
+  background: #ecf9f1;
 }
 
 .v1-summary__item--confirm {
@@ -703,6 +708,11 @@ button {
 .v1-action-banner--do_not_go {
   background: #fde2e1;
   color: #9f1f17;
+}
+
+.v1-action-banner--confirmed_task {
+  background: #d9f4e4;
+  color: #0f6b38;
 }
 
 .v1-action-banner--confirm_first {

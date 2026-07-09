@@ -36,6 +36,7 @@
 | 15:00-15:10 | v1         | 修正 GitHub Pages 404    | Agent 判斷 `/v1/` 在 Pages 會被當成真實目錄，先改用 `?view=v1` 切換視角                   | 採用後再修正   | localhost 會 fallback 到 app，但 Pages 沒有 `/v1/index.html`；後續改為 build 產生 v1 入口    | `src/app/App.tsx`, `src/components/VersionSwitch.tsx`, `src/features/v1/V1ActionDesk.tsx`                     |
 | 15:10-15:30 | Release 02 | 補流程設計與維護文件     | Agent 依 `release-packs/02-flow-design-kit` 建議補自然語言流程、Mermaid、人工確認點       | 採用           | 流程圖能讓接手者先理解四種行動者狀態，不把「可以出發確認資訊」誤改成正式派工                 | `docs/flow.md`, `docs/decisions.md`, `AGENTS.md`, `docs/ai-log.md`                                            |
 | 15:30-15:45 | v1         | 將 V1 放回 `/v1/`        | Agent 建議 build 後複製 `index.html` 到 `dist/v1/index.html`，讓 GitHub Pages 可開 `/v1/` | 採用           | 使用者希望 V1 前端放在 `/v1/`；靜態站台需要實體入口，並保留 `?view=v1` 作為 fallback         | `package.json`, `scripts/create-v1-entry.mjs`, `src/components/VersionSwitch.tsx`, `tests/app-smoke.test.tsx` |
+| 15:45-16:05 | v1         | 訪談後調整行動狀態語氣   | 四個 sub-agent 建議弱化未確認核對語氣；使用者補充人工確認完成後應像任務一樣明確           | 採用           | `verified` 才能顯示「已確認任務」；未確認資料改為「僅可前往核對」，並補狀態判斷測試          | `src/features/v1/*`, `tests/v1-action-status.test.ts`, `docs/flow.md`, `docs/decisions.md`                    |
 
 ## 範例
 
