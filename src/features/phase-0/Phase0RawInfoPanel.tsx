@@ -4,6 +4,7 @@ import { formatDateTime } from "../../lib/date";
 import { DraftBadge } from "./DraftBadge";
 import { assessPhase0Quality } from "./phase0-quality";
 import { inferPhase0Location } from "./phase0-sort";
+import { inferPhase0WorkType, toneForPhase0WorkType } from "./phase0-work-type";
 import type { Phase0JudgementDraft, Phase0MessyRecord } from "./phase0-types";
 
 export function Phase0RawInfoPanel({
@@ -31,6 +32,13 @@ export function Phase0RawInfoPanel({
         {records.map((record) => {
           const quality = assessPhase0Quality(record);
           const inferredLocation = inferPhase0Location(record);
+          const inferredWorkType = inferPhase0WorkType(record);
+          const workTypeLabels =
+            drafts[record.id]?.workTypeLabels.length &&
+            drafts[record.id].workTypeLabels.length > 0
+              ? drafts[record.id].workTypeLabels
+              : [inferredWorkType.label];
+          const workTypeTone = toneForPhase0WorkType(workTypeLabels[0]);
 
           return (
             <article
@@ -45,6 +53,12 @@ export function Phase0RawInfoPanel({
                   <StatusBadge status={record.verificationStatus} />
                   <DraftBadge draft={drafts[record.id]} />
                 </div>
+              </div>
+              <div
+                className={`work-type-banner work-type-banner--${workTypeTone}`}
+              >
+                <span>工種要求</span>
+                <strong>{workTypeLabels.join("、")}</strong>
               </div>
               <p>{record.rawText}</p>
               <section className="record-card__quality" aria-label="資料品質提示">

@@ -51,6 +51,25 @@ describe("App", () => {
     expect(screen.getAllByText(/推測地點：/).length).toBeGreaterThan(0);
   });
 
+  it("shows prominent work type labels for each raw record", () => {
+    render(<App />);
+
+    expect(screen.getAllByText("工種要求")).toHaveLength(12);
+    expect(screen.getAllByText("清淤 / 挖土").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("物資補給").length).toBeGreaterThan(0);
+    expect(screen.getByText("公告 / 交通資訊")).toBeInTheDocument();
+  });
+
+  it("lets learners edit work types as draft checklist values", () => {
+    render(<App />);
+
+    fireEvent.click(screen.getByRole("button", { name: "整理工作台" }));
+    fireEvent.click(screen.getByLabelText("水電支援"));
+    fireEvent.click(screen.getByRole("button", { name: "儲存草稿" }));
+
+    expect(screen.getByText("清淤 / 挖土、水電支援")).toBeInTheDocument();
+  });
+
   it("shows review states in the phase 0 workbench", () => {
     render(<App />);
 

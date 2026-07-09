@@ -4,6 +4,10 @@ import { formatDateTime } from "../lib/date";
 import { assessPhase0Quality } from "../features/phase-0/phase0-quality";
 import { inferPhase0Location } from "../features/phase-0/phase0-sort";
 import { DraftBadge } from "../features/phase-0/DraftBadge";
+import {
+  inferPhase0WorkType,
+  toneForPhase0WorkType,
+} from "../features/phase-0/phase0-work-type";
 import type { Phase0JudgementDraft } from "../features/phase-0/phase0-types";
 
 type RecordLike = {
@@ -46,6 +50,26 @@ export function RecordCard({
           verificationStatus: record.verificationStatus,
           updatedAt: record.updatedAt,
         });
+  const inferredWorkType =
+    record.rawText === undefined
+      ? null
+      : inferPhase0WorkType({
+          id: record.id,
+          rawText: record.rawText,
+          sourceType: record.sourceType,
+          verificationStatus: record.verificationStatus,
+          updatedAt: record.updatedAt,
+        });
+  const workTypeLabels =
+    draft?.workTypeLabels.length && draft.workTypeLabels.length > 0
+      ? draft.workTypeLabels
+      : inferredWorkType
+        ? [inferredWorkType.label]
+        : [];
+  const workTypeTone =
+    workTypeLabels.length > 0
+      ? toneForPhase0WorkType(workTypeLabels[0])
+      : "review";
 
   return (
     <article
@@ -62,6 +86,12 @@ export function RecordCard({
           <DraftBadge draft={draft} />
         </div>
       </div>
+      {workTypeLabels.length > 0 ? (
+        <div className={`work-type-banner work-type-banner--${workTypeTone}`}>
+          <span>工種要求</span>
+          <strong>{workTypeLabels.join("、")}</strong>
+        </div>
+      ) : null}
       {description ? <p>{description}</p> : null}
       {quality ? (
         <section className="record-card__quality" aria-label="資料品質提示">

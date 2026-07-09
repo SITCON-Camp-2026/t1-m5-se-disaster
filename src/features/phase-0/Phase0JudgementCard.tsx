@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { StatusBadge } from "../../components/StatusBadge";
+import { phase0WorkTypeOptions } from "./phase0-work-type";
 import type { Phase0JudgementDraft, Phase0MessyRecord } from "./phase0-types";
 
 const kindLabels: Record<Phase0JudgementDraft["possibleKind"], string> = {
@@ -87,7 +88,7 @@ export function Phase0JudgementCard({
   }
 
   function updateChecklist(
-    key: "evidence" | "blockers",
+    key: "workTypeLabels" | "evidence" | "blockers",
     option: string,
     checked: boolean,
   ) {
@@ -102,7 +103,7 @@ export function Phase0JudgementCard({
   }
 
   function updateOtherChecklistValue(
-    key: "evidence" | "blockers",
+    key: "workTypeLabels" | "evidence" | "blockers",
     options: string[],
     value: string,
   ) {
@@ -204,6 +205,23 @@ export function Phase0JudgementCard({
                 ))}
               </select>
             </label>
+
+            <ChecklistGroup
+              label="工種要求"
+              options={phase0WorkTypeOptions}
+              values={editingDraft.workTypeLabels}
+              onToggle={(option, checked) =>
+                updateChecklist("workTypeLabels", option, checked)
+              }
+              onOtherChange={(value) =>
+                updateOtherChecklistValue(
+                  "workTypeLabels",
+                  phase0WorkTypeOptions,
+                  value,
+                )
+              }
+              placeholder="未列出的工種可填在這裡。"
+            />
 
             <label className="draft-form__wide draft-form__checkbox">
               <span>不可直接行動</span>

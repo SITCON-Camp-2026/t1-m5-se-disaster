@@ -28,6 +28,7 @@ export type Phase0MessyRecord = {
 export type Phase0JudgementDraft = {
   messyRecordId: string;
   possibleKind: Phase0PossibleKind;
+  workTypeLabels: string[];
   confidence: Phase0Confidence;
   evidence: string[];
   blockers: string[];

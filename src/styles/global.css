@@ -173,6 +173,49 @@ button {
   margin: 0;
 }
 
+.work-type-banner {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 12px 0;
+  border: 1px solid #cfd8e3;
+  border-radius: 8px;
+  padding: 10px 12px;
+  background: #ffffff;
+}
+
+.work-type-banner span {
+  color: #5f6b7a;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.work-type-banner strong {
+  color: #17202a;
+  font-size: 1.05rem;
+}
+
+.work-type-banner--action {
+  border-color: #f0b26a;
+  background: #fff5e8;
+}
+
+.work-type-banner--supply {
+  border-color: #7fc6a4;
+  background: #effaf4;
+}
+
+.work-type-banner--notice {
+  border-color: #8fb8e8;
+  background: #eef6ff;
+}
+
+.work-type-banner--review {
+  border-color: #d2c3f1;
+  background: #f7f3ff;
+}
+
 .record-card p {
   margin: 10px 0;
   line-height: 1.6;

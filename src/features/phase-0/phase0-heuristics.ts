@@ -9,6 +9,7 @@ export function createPhase0Judgement(
   return {
     messyRecordId: record.id,
     possibleKind: "unknown",
+    workTypeLabels: [],
     confidence: "low",
     evidence: ["尚未建立整理草稿：請由小組從原文標出判斷依據。"],
     blockers: isVerified

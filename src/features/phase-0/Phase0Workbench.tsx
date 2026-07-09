@@ -4,6 +4,7 @@ import { StatusBadge } from "../../components/StatusBadge";
 import { DraftBadge } from "./DraftBadge";
 import { Phase0JudgementCard } from "./Phase0JudgementCard";
 import { createPhase0Judgement } from "./phase0-heuristics";
+import { inferPhase0WorkType } from "./phase0-work-type";
 import type { Phase0JudgementDraft, Phase0MessyRecord } from "./phase0-types";
 
 export function createInitialDrafts(
@@ -14,6 +15,7 @@ export function createInitialDrafts(
       record.id,
       {
         ...createPhase0Judgement(record),
+        workTypeLabels: [inferPhase0WorkType(record).label],
         evidence: [],
         blockers: [],
         humanReviewNote: "",
@@ -48,6 +50,7 @@ export function Phase0Workbench({
       ...currentDrafts,
       [record.id]: {
         ...createPhase0Judgement(record),
+        workTypeLabels: [inferPhase0WorkType(record).label],
         evidence: [],
         blockers: [],
         humanReviewNote: "",
