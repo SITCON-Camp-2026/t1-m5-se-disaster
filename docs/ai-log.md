@@ -34,6 +34,7 @@
 | 14:40-14:55 | v1         | 補足可出發確認狀態       | 使用者指出三種狀態缺少「可以出發確認資訊」，且現場幫手需要知道具體要做什麼             | 採用           | 新增「可以出發確認資訊」狀態，但仍限定為核對資訊，不代表正式派工或直接救災                   | `src/features/v1/*`, `src/styles/global.css`, `tests/app-smoke.test.tsx`                              |
 | 14:55-15:00 | v1         | 改善視角切換標籤         | 使用者指出右上切換鈕只顯示 0/1 資訊不足，應顯示不同視角分類                            | 採用           | 將切換鈕改為「整理者視角」「行動者視角」，保留 Phase 0 與 V1 路徑切換                        | `src/components/VersionSwitch.tsx`, `src/styles/global.css`, `tests/app-smoke.test.tsx`               |
 | 15:00-15:10 | v1         | 修正 GitHub Pages 404    | Agent 判斷 `/v1/` 在 Pages 會被當成真實目錄，改用 `?view=v1` 切換視角                  | 採用           | localhost 會 fallback 到 app，但 Pages 沒有 `/v1/index.html`；query URL 可共用同一份入口     | `src/app/App.tsx`, `src/components/VersionSwitch.tsx`, `src/features/v1/V1ActionDesk.tsx`             |
+| 15:10-15:30 | Release 02 | 補流程設計與維護文件     | Agent 依 `release-packs/02-flow-design-kit` 建議補自然語言流程、Mermaid、人工確認點    | 採用           | 流程圖能讓接手者先理解四種行動者狀態，不把「可以出發確認資訊」誤改成正式派工                 | `docs/flow.md`, `docs/decisions.md`, `AGENTS.md`, `docs/ai-log.md`                                    |
 
 ## 範例
 
