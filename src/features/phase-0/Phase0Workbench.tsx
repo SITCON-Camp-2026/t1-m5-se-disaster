@@ -101,7 +101,10 @@ export function Phase0Workbench({
         </aside>
 
         <div className="workbench__main">
-          <RecordCard record={selectedRecord} draft={drafts[selectedRecord.id]} />
+          <RecordCard
+            record={selectedRecord}
+            draft={drafts[selectedRecord.id]}
+          />
 
           <Phase0JudgementCard
             judgement={selectedDraft}

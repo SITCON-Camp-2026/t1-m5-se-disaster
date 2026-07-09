@@ -244,7 +244,34 @@ Phase 0 只使用：
 
 不得自行修改 `CommonRecord`。
 
-## 9. 學員文件用語
+## 9. 目前 Phase 0 工作台狀態
+
+目前首頁已接上 Phase 0 最小工作台：
+
+- `src/app/App.tsx`：管理分頁、排序、草稿狀態。
+- `src/features/phase-0/Phase0RawInfoPanel.tsx`：原始資訊卡片列表。
+- `src/features/phase-0/Phase0Workbench.tsx`：整理工作台主流程。
+- `src/features/phase-0/Phase0JudgementCard.tsx`：可編輯整理草稿表單。
+- `src/features/phase-0/phase0-quality.ts`：資料品質與缺漏提示。
+- `src/features/phase-0/phase0-sort.ts`：排序與推測地點。
+- `src/features/phase-0/phase0-work-type.ts`：工種要求推測與工種選項。
+- `src/features/phase-0/DraftBadge.tsx`：草稿狀態標示。
+
+草稿狀態只存在 React state。切換分頁會保留；重新整理瀏覽器會回到預設。請不要改成 `localStorage`，因為 Phase 0 task card 明確限制不要使用。
+
+## 10. 目前 UI / 行為維護規則
+
+維護或擴充目前工作台時，請遵守：
+
+- `工種要求` 是草稿的一部分，使用 `workTypeLabels: string[]` 儲存，並以多選清單編輯。
+- 沒有草稿時，卡片可以顯示 `phase0-work-type.ts` 的保守推測；有草稿時，卡片必須優先顯示草稿中的工種。
+- `整理依據` 和 `卡住的地方` 使用 checkbox 多選加「其他」文字框，不要改回大段自由輸入，除非課程明確需要。
+- `草稿狀態` 分成 `未建立草稿`、`已有草稿`、`有人類修正`，目前用 `DraftBadge` 顯示。
+- 排序選項目前包含時間、推測地點、可信度、任務方式 / 下一步、草稿狀態。
+- 推測地點、工種要求、資料品質提示都是協助整理的草稿線索，不是已確認事實。
+- 不要在畫面上加入「第一階段完成檢查」這類給 agent / 課程使用的內部 checklist。
+
+## 11. 學員文件用語
 
 學生可見文件請優先使用白話中文：
 
@@ -264,7 +291,7 @@ Phase 0 只使用：
 
 若需要保留英文技術詞，請用括號補充，不要讓學生文件充滿英文術語。
 
-## 10. AI 使用紀錄與人類確認
+## 12. AI 使用紀錄與人類確認
 
 使用 AI / Coding Agent 完成重要工作時，必須更新 `docs/ai-log.md`。
 
@@ -285,7 +312,7 @@ AI 產生的訪談彙整、需求取捨、流程圖或變更分析必須保留�
 
 Codex 可以先寫草稿，但學員必須刪除、修改或補充，不能直接把 AI 輸出當成最終決策。
 
-## 11. 驗證
+## 13. 驗證
 
 完成前請執行：
 

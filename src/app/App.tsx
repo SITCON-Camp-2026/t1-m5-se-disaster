@@ -27,7 +27,9 @@ export function App() {
   const [selectedRecordId, setSelectedRecordId] = useState(
     phase0Records[0]?.id ?? "",
   );
-  const [drafts, setDrafts] = useState(() => createInitialDrafts(phase0Records));
+  const [drafts, setDrafts] = useState(() =>
+    createInitialDrafts(phase0Records),
+  );
   const [sortKey, setSortKey] = useState<Phase0SortKey>("updatedAtDesc");
   const sortedRecords = useMemo(
     () => sortPhase0Records(phase0Records, sortKey, drafts),

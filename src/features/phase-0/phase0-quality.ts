@@ -28,8 +28,7 @@ const missingChecks: Array<{
   },
   {
     label: "具體需求或狀態",
-    pattern:
-      /需要|不缺|還有|剩|開放|封閉|支援|協助|不要|不再|登記|確認|任務/u,
+    pattern: /需要|不缺|還有|剩|開放|封閉|支援|協助|不要|不再|登記|確認|任務/u,
   },
 ];
 
@@ -65,7 +64,8 @@ export function assessPhase0Quality(
     return {
       riskLevel: "ok",
       headline: "已確認資料",
-      reasons: reasons.length > 0 ? reasons : ["欄位訊號較完整，仍需人工判斷用途。"],
+      reasons:
+        reasons.length > 0 ? reasons : ["欄位訊號較完整，仍需人工判斷用途。"],
       missingSignals,
     };
   }

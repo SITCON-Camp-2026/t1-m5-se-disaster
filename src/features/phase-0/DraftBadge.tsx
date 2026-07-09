@@ -6,7 +6,9 @@ export function DraftBadge({ draft }: { draft?: Phase0JudgementDraft }) {
   }
 
   if (draft.humanReviewNote?.trim()) {
-    return <span className="draft-badge draft-badge--reviewed">有人類修正</span>;
+    return (
+      <span className="draft-badge draft-badge--reviewed">有人類修正</span>
+    );
   }
 
   return <span className="draft-badge draft-badge--exists">已有草稿</span>;

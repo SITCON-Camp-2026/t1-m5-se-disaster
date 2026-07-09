@@ -96,9 +96,7 @@ describe("App", () => {
     expect(
       screen.getByRole("button", { name: "重設為安全預設" }),
     ).toBeInTheDocument();
-    expect(
-      screen.getByRole("button", { name: "儲存草稿" }),
-    ).toBeDisabled();
+    expect(screen.getByRole("button", { name: "儲存草稿" })).toBeDisabled();
     expect(screen.getByText("整理依據")).toBeInTheDocument();
     expect(screen.getByLabelText("原文有明確地點")).toBeInTheDocument();
     expect(screen.getByText("卡住的地方")).toBeInTheDocument();
@@ -156,8 +154,8 @@ describe("App", () => {
     fireEvent.click(screen.getByRole("button", { name: "原始資訊" }));
     fireEvent.click(screen.getByRole("button", { name: "整理工作台" }));
 
-    expect(
-      screen.getByRole("combobox", { name: "信心程度" }),
-    ).toHaveValue("medium");
+    expect(screen.getByRole("combobox", { name: "信心程度" })).toHaveValue(
+      "medium",
+    );
   });
 });

@@ -1,20 +1,15 @@
 import type { Phase0JudgementDraft, Phase0MessyRecord } from "./phase0-types";
 
 export type Phase0SortKey =
-  | "updatedAtDesc"
-  | "location"
-  | "credibility"
-  | "nextStep"
-  | "draftStatus";
+  "updatedAtDesc" | "location" | "credibility" | "nextStep" | "draftStatus";
 
-export const phase0SortOptions: Array<{ key: Phase0SortKey; label: string }> =
-  [
-    { key: "updatedAtDesc", label: "時間：最新在前" },
-    { key: "location", label: "推測地點" },
-    { key: "credibility", label: "可信度" },
-    { key: "nextStep", label: "任務方式 / 下一步" },
-    { key: "draftStatus", label: "草稿狀態" },
-  ];
+export const phase0SortOptions: Array<{ key: Phase0SortKey; label: string }> = [
+  { key: "updatedAtDesc", label: "時間：最新在前" },
+  { key: "location", label: "推測地點" },
+  { key: "credibility", label: "可信度" },
+  { key: "nextStep", label: "任務方式 / 下一步" },
+  { key: "draftStatus", label: "草稿狀態" },
+];
 
 const locationPatterns: Array<{ label: string; pattern: RegExp }> = [
   { label: "光復車站", pattern: /光復車站|車站/u },
@@ -105,7 +100,8 @@ export function sortPhase0Records(
       );
     }
 
-    const leftStep = drafts[left.id]?.suggestedNextStep ?? "send_to_human_review";
+    const leftStep =
+      drafts[left.id]?.suggestedNextStep ?? "send_to_human_review";
     const rightStep =
       drafts[right.id]?.suggestedNextStep ?? "send_to_human_review";
 

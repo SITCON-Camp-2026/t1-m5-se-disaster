@@ -61,7 +61,10 @@ export function Phase0RawInfoPanel({
                 <strong>{workTypeLabels.join("、")}</strong>
               </div>
               <p>{record.rawText}</p>
-              <section className="record-card__quality" aria-label="資料品質提示">
+              <section
+                className="record-card__quality"
+                aria-label="資料品質提示"
+              >
                 <strong>{quality.headline}</strong>
                 {quality.reasons.length > 0 ? (
                   <ul>
