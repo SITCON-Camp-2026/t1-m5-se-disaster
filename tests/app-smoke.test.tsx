@@ -40,9 +40,10 @@ describe("App", () => {
     expect(
       screen.getByRole("navigation", { name: "版本切換" }),
     ).toBeInTheDocument();
-    expect(
-      screen.getByRole("link", { name: "行動者視角 V1" }),
-    ).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "行動者視角 V1" })).toHaveAttribute(
+      "href",
+      "/?view=v1",
+    );
   });
 
   it("sorts phase 0 records by inferred location", () => {
@@ -186,5 +187,15 @@ describe("App", () => {
     expect(
       screen.getByRole("link", { name: "整理者視角 Phase 0 工作台" }),
     ).toBeInTheDocument();
+  });
+
+  it("renders v1 actor view from a GitHub Pages friendly query URL", () => {
+    renderAt("/?view=v1");
+
+    expect(screen.getByText("先判斷能不能行動")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "行動者視角 V1" })).toHaveAttribute(
+      "href",
+      "/?view=v1",
+    );
   });
 });

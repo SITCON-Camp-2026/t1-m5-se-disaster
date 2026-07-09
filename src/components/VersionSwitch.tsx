@@ -20,7 +20,7 @@ export function VersionSwitch({ active }: VersionSwitchProps) {
         aria-current={active === "v1" ? "page" : undefined}
         aria-label="行動者視角 V1"
         className={active === "v1" ? "active" : ""}
-        href={`${baseUrl}v1/`}
+        href={`${baseUrl}?view=v1`}
         title="行動者視角 V1"
       >
         行動者視角

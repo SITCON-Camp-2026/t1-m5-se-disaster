@@ -60,7 +60,7 @@ export function V1ActionDesk({ records }: { records: Phase0MessyRecord[] }) {
         {filterOptions.map((option) => (
           <a
             className={activeFilter === option.key ? "active" : ""}
-            href={`${import.meta.env.BASE_URL}v1/?filter=${option.key}`}
+            href={`${import.meta.env.BASE_URL}?view=v1&filter=${option.key}`}
             key={option.key}
           >
             {option.label}

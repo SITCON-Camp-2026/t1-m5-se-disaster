@@ -23,7 +23,10 @@ const tabs: Array<{ key: TabKey; label: string }> = [
 const phase0Records = messyReports satisfies Phase0MessyRecord[];
 
 export function App() {
-  const isV1 = window.location.pathname.endsWith("/v1/");
+  const searchParams = new URLSearchParams(window.location.search);
+  const isV1 =
+    searchParams.get("view") === "v1" ||
+    window.location.pathname.endsWith("/v1/");
   const [activeTab, setActiveTab] = useState<TabKey>("raw");
   const [selectedRecordId, setSelectedRecordId] = useState(
     phase0Records[0]?.id ?? "",
