@@ -1,9 +1,11 @@
 import { useMemo, useState } from "react";
 import messyReports from "../fixtures/phase-0/messy-reports.json";
 import { EmptyState } from "../components/EmptyState";
+import { VersionSwitch } from "../components/VersionSwitch";
 import { Phase0RawInfoPanel } from "../features/phase-0/Phase0RawInfoPanel";
 import { createInitialDrafts } from "../features/phase-0/phase0-drafts";
 import { Phase0Workbench } from "../features/phase-0/Phase0Workbench";
+import { V1ActionDesk } from "../features/v1/V1ActionDesk";
 import {
   phase0SortOptions,
   sortPhase0Records,
@@ -21,6 +23,7 @@ const tabs: Array<{ key: TabKey; label: string }> = [
 const phase0Records = messyReports satisfies Phase0MessyRecord[];
 
 export function App() {
+  const isV1 = window.location.pathname.endsWith("/v1/");
   const [activeTab, setActiveTab] = useState<TabKey>("raw");
   const [selectedRecordId, setSelectedRecordId] = useState(
     phase0Records[0]?.id ?? "",
@@ -39,10 +42,17 @@ export function App() {
     setActiveTab("workbench");
   }
 
+  if (isV1) {
+    return <V1ActionDesk records={phase0Records} />;
+  }
+
   return (
     <main className="layout">
       <header className="hero">
-        <p className="eyebrow">SITCON Camp 2026</p>
+        <div className="hero__top">
+          <p className="eyebrow">SITCON Camp 2026</p>
+          <VersionSwitch active="phase0" />
+        </div>
         <h1>災害資訊整理工作台</h1>
         <p>
           第一階段先用 coding agent
