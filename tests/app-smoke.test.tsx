@@ -42,7 +42,7 @@ describe("App", () => {
     ).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "行動者視角 V1" })).toHaveAttribute(
       "href",
-      "/?view=v1",
+      "/v1/",
     );
   });
 
@@ -189,13 +189,13 @@ describe("App", () => {
     ).toBeInTheDocument();
   });
 
-  it("renders v1 actor view from a GitHub Pages friendly query URL", () => {
+  it("keeps a query URL fallback for the v1 actor view", () => {
     renderAt("/?view=v1");
 
     expect(screen.getByText("先判斷能不能行動")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "行動者視角 V1" })).toHaveAttribute(
       "href",
-      "/?view=v1",
+      "/v1/",
     );
   });
 });

@@ -83,7 +83,7 @@ flowchart TD
 - AI 或 Agent 建議新增、刪除、重新命名狀態時，記錄在 `docs/ai-log.md`。
 - 人類決定主要使用者、採用或拒絕 AI 建議時，記錄在 `docs/decisions.md`。
 - 流程圖或狀態規則改變時，更新本檔案，讓接手者先看流程再改程式。
-- 因部署環境造成的行為差異也要記錄，例如 GitHub Pages 使用 `?view=v1`，避免 `/v1/` 造成 404。
+- 因部署環境造成的行為差異也要記錄，例如 GitHub Pages 需要 build 後產生 `dist/v1/index.html`，避免 `/v1/` 造成 404。
 
 ## 我檢查後修正了什麼
 
