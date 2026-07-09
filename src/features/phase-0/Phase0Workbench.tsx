@@ -3,26 +3,9 @@ import { RecordCard } from "../../components/RecordCard";
 import { StatusBadge } from "../../components/StatusBadge";
 import { DraftBadge } from "./DraftBadge";
 import { Phase0JudgementCard } from "./Phase0JudgementCard";
+import { createPhase0Draft } from "./phase0-drafts";
 import { createPhase0Judgement } from "./phase0-heuristics";
-import { inferPhase0WorkType } from "./phase0-work-type";
 import type { Phase0JudgementDraft, Phase0MessyRecord } from "./phase0-types";
-
-export function createInitialDrafts(
-  records: Phase0MessyRecord[],
-): Record<string, Phase0JudgementDraft> {
-  return Object.fromEntries(
-    records.slice(0, 6).map((record) => [
-      record.id,
-      {
-        ...createPhase0Judgement(record),
-        workTypeLabels: [inferPhase0WorkType(record).label],
-        evidence: [],
-        blockers: [],
-        humanReviewNote: "",
-      },
-    ]),
-  );
-}
 
 export function Phase0Workbench({
   records,
@@ -44,17 +27,12 @@ export function Phase0Workbench({
     [selectedRecord],
   );
   const selectedDraft = drafts[selectedRecord.id] ?? fallbackDraft;
+  const selectedDraftKey = `${selectedRecord.id}:${JSON.stringify(selectedDraft)}`;
 
   function createDraft(record: Phase0MessyRecord) {
     setDrafts((currentDrafts) => ({
       ...currentDrafts,
-      [record.id]: {
-        ...createPhase0Judgement(record),
-        workTypeLabels: [inferPhase0WorkType(record).label],
-        evidence: [],
-        blockers: [],
-        humanReviewNote: "",
-      },
+      [record.id]: createPhase0Draft(record),
     }));
   }
 
@@ -107,6 +85,7 @@ export function Phase0Workbench({
           />
 
           <Phase0JudgementCard
+            key={selectedDraftKey}
             judgement={selectedDraft}
             record={selectedRecord}
             hasDraft={selectedRecord.id in drafts}

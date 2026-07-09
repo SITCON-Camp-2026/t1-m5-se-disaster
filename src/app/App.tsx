@@ -2,10 +2,8 @@ import { useMemo, useState } from "react";
 import messyReports from "../fixtures/phase-0/messy-reports.json";
 import { EmptyState } from "../components/EmptyState";
 import { Phase0RawInfoPanel } from "../features/phase-0/Phase0RawInfoPanel";
-import {
-  createInitialDrafts,
-  Phase0Workbench,
-} from "../features/phase-0/Phase0Workbench";
+import { createInitialDrafts } from "../features/phase-0/phase0-drafts";
+import { Phase0Workbench } from "../features/phase-0/Phase0Workbench";
 import {
   phase0SortOptions,
   sortPhase0Records,

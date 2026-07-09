@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { StatusBadge } from "../../components/StatusBadge";
 import { phase0WorkTypeOptions } from "./phase0-work-type";
 import type { Phase0JudgementDraft, Phase0MessyRecord } from "./phase0-types";
@@ -72,10 +72,6 @@ export function Phase0JudgementCard({
   onReset: () => void;
 }) {
   const [editingDraft, setEditingDraft] = useState(judgement);
-
-  useEffect(() => {
-    setEditingDraft(judgement);
-  }, [judgement, record.id]);
 
   const hasUnsavedChanges =
     JSON.stringify(editingDraft) !== JSON.stringify(judgement);
