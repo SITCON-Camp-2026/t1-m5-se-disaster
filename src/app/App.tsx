@@ -1,8 +1,16 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import messyReports from "../fixtures/phase-0/messy-reports.json";
 import { EmptyState } from "../components/EmptyState";
 import { Phase0RawInfoPanel } from "../features/phase-0/Phase0RawInfoPanel";
-import { Phase0Workbench } from "../features/phase-0/Phase0Workbench";
+import {
+  createInitialDrafts,
+  Phase0Workbench,
+} from "../features/phase-0/Phase0Workbench";
+import {
+  phase0SortOptions,
+  sortPhase0Records,
+  type Phase0SortKey,
+} from "../features/phase-0/phase0-sort";
 import type { Phase0MessyRecord } from "../features/phase-0/phase0-types";
 
 type TabKey = "raw" | "workbench";
@@ -18,6 +26,12 @@ export function App() {
   const [activeTab, setActiveTab] = useState<TabKey>("raw");
   const [selectedRecordId, setSelectedRecordId] = useState(
     phase0Records[0]?.id ?? "",
+  );
+  const [drafts, setDrafts] = useState(() => createInitialDrafts(phase0Records));
+  const [sortKey, setSortKey] = useState<Phase0SortKey>("updatedAtDesc");
+  const sortedRecords = useMemo(
+    () => sortPhase0Records(phase0Records, sortKey, drafts),
+    [sortKey, drafts],
   );
 
   function selectForWorkbench(recordId: string) {
@@ -49,20 +63,41 @@ export function App() {
         ))}
       </nav>
 
+      <div className="toolbar" aria-label="排序與分類">
+        <label>
+          <span>排序依據</span>
+          <select
+            value={sortKey}
+            onChange={(event) =>
+              setSortKey(event.target.value as Phase0SortKey)
+            }
+          >
+            {phase0SortOptions.map((option) => (
+              <option key={option.key} value={option.key}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+        </label>
+      </div>
+
       <section className="panel">
         {phase0Records.length === 0 ? (
           <EmptyState message="目前沒有資料" />
         ) : activeTab === "raw" ? (
           <Phase0RawInfoPanel
-            records={phase0Records}
+            records={sortedRecords}
             selectedRecordId={selectedRecordId}
             onSelect={selectForWorkbench}
+            drafts={drafts}
           />
         ) : (
           <Phase0Workbench
-            records={phase0Records}
+            records={sortedRecords}
             selectedRecordId={selectedRecordId}
             onSelect={setSelectedRecordId}
+            drafts={drafts}
+            setDrafts={setDrafts}
           />
         )}
       </section>

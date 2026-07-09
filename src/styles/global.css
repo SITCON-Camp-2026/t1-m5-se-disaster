@@ -74,6 +74,31 @@ button {
   color: white;
 }
 
+.toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin: -8px 0 16px;
+}
+
+.toolbar label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #344054;
+  font-weight: 700;
+}
+
+.toolbar select {
+  min-width: 180px;
+  border: 1px solid #cfd8e3;
+  border-radius: 8px;
+  padding: 8px 10px;
+  background: #ffffff;
+  color: #17202a;
+  font: inherit;
+  font-weight: 400;
+}
+
 .panel {
   padding: 24px;
   border-radius: 20px;
@@ -105,6 +130,26 @@ button {
   background: #fbfcfe;
 }
 
+.record-card--risk-danger {
+  border-color: #f0a2a0;
+  background: #fff7f6;
+}
+
+.record-card--risk-warning {
+  border-color: #e8c878;
+  background: #fffaf0;
+}
+
+.record-card--risk-info {
+  border-color: #9ec5e8;
+  background: #f6fbff;
+}
+
+.record-card--risk-ok {
+  border-color: #8fd2a8;
+  background: #f4fcf7;
+}
+
 .record-card--selected {
   border-color: #245d9d;
   box-shadow: 0 0 0 3px rgb(36 93 157 / 12%);
@@ -117,12 +162,38 @@ button {
   gap: 12px;
 }
 
+.badge-stack {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
 .record-card h3 {
   margin: 0;
 }
 
 .record-card p {
+  margin: 10px 0;
   line-height: 1.6;
+}
+
+.record-card__quality {
+  margin: 10px 0;
+  border-radius: 8px;
+  padding: 10px;
+  background: rgb(255 255 255 / 72%);
+}
+
+.record-card__quality strong {
+  display: block;
+  margin-bottom: 6px;
+}
+
+.record-card__quality ul {
+  margin: 0;
+  padding-left: 20px;
+  line-height: 1.55;
 }
 
 .record-card__meta {
@@ -169,15 +240,12 @@ button {
 
 .workbench__layout {
   display: grid;
-  grid-template-columns: minmax(150px, 190px) minmax(0, 1fr) minmax(
-      220px,
-      260px
-    );
+  grid-template-columns: minmax(150px, 190px) minmax(0, 1fr);
+  align-items: start;
   gap: 16px;
 }
 
 .workbench__queue,
-.workbench__checklist,
 .judgement-card {
   border: 1px solid #dbe4ef;
   border-radius: 8px;
@@ -204,7 +272,12 @@ button {
 
 .workbench__main {
   display: grid;
+  align-content: start;
   gap: 16px;
+}
+
+.workbench__main > .record-card {
+  align-self: start;
 }
 
 .judgement-card__header {
@@ -213,8 +286,7 @@ button {
   gap: 16px;
 }
 
-.judgement-card h3,
-.workbench__checklist h3 {
+.judgement-card h3 {
   margin-top: 0;
 }
 
@@ -245,14 +317,147 @@ button {
   margin-bottom: 8px;
 }
 
-.judgement-card ul,
-.workbench__checklist ul {
+.draft-form {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 16px;
+}
+
+.draft-form label {
+  display: grid;
+  gap: 6px;
+  color: #344054;
+  font-weight: 700;
+}
+
+.draft-form select,
+.draft-form textarea {
+  width: 100%;
+  border: 1px solid #cfd8e3;
+  border-radius: 8px;
+  padding: 9px 10px;
+  background: #ffffff;
+  color: #17202a;
+  font: inherit;
+  font-weight: 400;
+}
+
+.draft-form textarea {
+  resize: vertical;
+}
+
+.checklist-group {
+  display: grid;
+  gap: 10px;
+  border: 1px solid #dbe4ef;
+  border-radius: 8px;
+  padding: 12px;
+  margin: 0;
+  background: rgb(255 255 255 / 58%);
+}
+
+.checklist-group legend {
+  padding: 0 4px;
+  color: #344054;
+  font-weight: 700;
+}
+
+.checklist-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 8px;
+}
+
+.draft-form .checklist-options label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  border: 1px solid #dbe4ef;
+  border-radius: 8px;
+  padding: 8px 10px;
+  background: #ffffff;
+  font-weight: 600;
+}
+
+.checklist-options input {
+  flex: 0 0 auto;
+  width: 18px;
+  height: 18px;
+  margin: 0;
+}
+
+.checklist-other {
+  display: grid;
+  gap: 6px;
+}
+
+.draft-form textarea::placeholder {
+  color: #8a94a3;
+}
+
+.draft-form__wide {
+  grid-column: 1 / -1;
+}
+
+.draft-form label.draft-form__checkbox {
+  display: inline-flex;
+  grid-column: 1 / -1;
+  align-items: center;
+  gap: 8px;
+  justify-content: flex-start;
+}
+
+.draft-form__checkbox input {
+  flex: 0 0 auto;
+  width: 18px;
+  height: 18px;
+  margin: 0;
+}
+
+.draft-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.draft-actions button,
+.primary-action {
+  border: 1px solid #cfd8e3;
+  border-radius: 8px;
+  padding: 9px 12px;
+  background: #ffffff;
+  cursor: pointer;
+}
+
+.draft-actions button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.primary-action {
+  border-color: #245d9d;
+  background: #245d9d;
+  color: #ffffff;
+}
+
+.draft-save-state {
+  color: #5f6b7a;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.judgement-card ul {
   padding-left: 20px;
   line-height: 1.6;
 }
 
 .status-badge,
-.source-label {
+.source-label,
+.draft-badge {
   display: inline-flex;
   align-items: center;
   width: fit-content;
@@ -295,6 +500,21 @@ button {
   color: #245d9d;
 }
 
+.draft-badge--empty {
+  background: #f1f3f5;
+  color: #5f6b7a;
+}
+
+.draft-badge--exists {
+  background: #e8f1ff;
+  color: #245d9d;
+}
+
+.draft-badge--reviewed {
+  background: #e9f8ef;
+  color: #116b37;
+}
+
 .empty-state,
 .error-state {
   border-radius: 8px;
@@ -313,11 +533,34 @@ button {
 }
 
 @media (max-width: 860px) {
+  .toolbar,
+  .toolbar label {
+    align-items: stretch;
+  }
+
+  .toolbar,
+  .toolbar label,
+  .toolbar select {
+    width: 100%;
+  }
+
+  .toolbar label {
+    display: grid;
+  }
+
+  .draft-form label.draft-form__checkbox {
+    display: inline-flex;
+  }
+
   .workbench__layout {
     grid-template-columns: 1fr;
   }
 
   .judgement-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .draft-form {
     grid-template-columns: 1fr;
   }
 }

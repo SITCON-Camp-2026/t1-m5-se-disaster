@@ -1,21 +1,74 @@
+import { useMemo, type Dispatch, type SetStateAction } from "react";
 import { RecordCard } from "../../components/RecordCard";
 import { StatusBadge } from "../../components/StatusBadge";
+import { DraftBadge } from "./DraftBadge";
 import { Phase0JudgementCard } from "./Phase0JudgementCard";
 import { createPhase0Judgement } from "./phase0-heuristics";
-import type { Phase0MessyRecord } from "./phase0-types";
+import type { Phase0JudgementDraft, Phase0MessyRecord } from "./phase0-types";
+
+export function createInitialDrafts(
+  records: Phase0MessyRecord[],
+): Record<string, Phase0JudgementDraft> {
+  return Object.fromEntries(
+    records.slice(0, 6).map((record) => [
+      record.id,
+      {
+        ...createPhase0Judgement(record),
+        evidence: [],
+        blockers: [],
+        humanReviewNote: "",
+      },
+    ]),
+  );
+}
 
 export function Phase0Workbench({
   records,
   selectedRecordId,
   onSelect,
+  drafts,
+  setDrafts,
 }: {
   records: Phase0MessyRecord[];
   selectedRecordId: string;
   onSelect: (recordId: string) => void;
+  drafts: Record<string, Phase0JudgementDraft>;
+  setDrafts: Dispatch<SetStateAction<Record<string, Phase0JudgementDraft>>>;
 }) {
   const selectedRecord =
     records.find((record) => record.id === selectedRecordId) ?? records[0];
-  const safetyBoundary = createPhase0Judgement(selectedRecord);
+  const fallbackDraft = useMemo(
+    () => createPhase0Judgement(selectedRecord),
+    [selectedRecord],
+  );
+  const selectedDraft = drafts[selectedRecord.id] ?? fallbackDraft;
+
+  function createDraft(record: Phase0MessyRecord) {
+    setDrafts((currentDrafts) => ({
+      ...currentDrafts,
+      [record.id]: {
+        ...createPhase0Judgement(record),
+        evidence: [],
+        blockers: [],
+        humanReviewNote: "",
+      },
+    }));
+  }
+
+  function updateSelectedDraft(nextDraft: Phase0JudgementDraft) {
+    setDrafts((currentDrafts) => ({
+      ...currentDrafts,
+      [selectedRecord.id]: nextDraft,
+    }));
+  }
+
+  function deleteSelectedDraft() {
+    setDrafts((currentDrafts) => {
+      const nextDrafts = { ...currentDrafts };
+      delete nextDrafts[selectedRecord.id];
+      return nextDrafts;
+    });
+  }
 
   return (
     <div className="workbench">
@@ -39,31 +92,24 @@ export function Phase0Workbench({
             >
               <span>{record.id}</span>
               <StatusBadge status={record.verificationStatus} />
+              <DraftBadge draft={drafts[record.id]} />
             </button>
           ))}
         </aside>
 
         <div className="workbench__main">
-          <RecordCard record={selectedRecord} />
+          <RecordCard record={selectedRecord} draft={drafts[selectedRecord.id]} />
 
           <Phase0JudgementCard
-            judgement={safetyBoundary}
+            judgement={selectedDraft}
             record={selectedRecord}
+            hasDraft={selectedRecord.id in drafts}
+            onCreate={() => createDraft(selectedRecord)}
+            onChange={updateSelectedDraft}
+            onDelete={deleteSelectedDraft}
+            onReset={() => createDraft(selectedRecord)}
           />
         </div>
-
-        <aside className="workbench__checklist">
-          <h3>第一階段完成檢查</h3>
-          <ul>
-            <li>Starter 已載入 {records.length} 筆原始資訊</li>
-            <li>請 agent 加上建立、編輯、刪除或重設整理草稿</li>
-            <li>至少讓 6 筆原始資訊被嘗試整理成可編輯草稿</li>
-            <li>至少挑 2 個候選判斷由人類質疑或修正</li>
-            <li>
-              把資料品質問題寫進 observations，並記錄 agent 哪裡不能直接相信
-            </li>
-          </ul>
-        </aside>
       </div>
     </div>
   );
